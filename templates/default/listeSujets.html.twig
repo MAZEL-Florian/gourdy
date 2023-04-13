@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gourdy - {{ categorie }} {% endblock %}
+
+{% block body %}
+
+<div class="container pt-5">
+<h1 class="text-white p-5">Catégorie > {{ categorie }}</h1>
+
+
+<div class="py-1 bg-danger rounded"></div><br>
+{# {% for sujet in sujets|sort((a, b) => a.n <=> b.n) %}
+    <td>{{ sujet.n }}</td> <td>{{ sujet.pseudo}}</td> <td>{{ sujet.titre}}</td><br>
+{% endfor %} #}
+{% if sujets is empty %}
+    <div class="container">
+    <h3 class="text-white pt-5">Il n'y a aucun sujet dans cette catégorie</h3>
+        <p>
+            Créez un nouveau sujet dès maintenant en cliquant ici :
+            <a class="" href="{{ path('ajout_sujet') }}">Nouveau sujet</a>
+        </p>
+    </div> 
+{% else %}
+{% set cpt = 0 %}
+
+{% set page = app.request.get('page') %}
+{% set nbSujet = page*8 %}
+
+
+    {% if sujets|slice(nbSujet, 8) is empty and page >= 1 %}
+    <script>
+        location.replace("sujets-{{ categorie }}");
+    </script>
+    {% endif %}
+<table id="dtBasicExample" class="table table-hover bg-light border border-1 border-dark" cellspacing="0">
+    <thead class="table-dark">
+        <tr>
+            <th class="col-xl-5">Titre du sujet</th>
+            <th scope="col">Pseudo</th>
+            <th scope="col">Date de création</th>
+            <th scope="col">Nombre de messages</th>
+            <th scope="col">Dernier commentaire</th>
+        </tr>
+        </thead>
+    <tbody>
+        {% for sujet in sujets|slice(nbSujet, 8) %}
+            <tr>
+                <th scope="row"><a class="text-decoration-none" href="{{ path('vue_sujet', {'id':sujet.id }) }}">{{ sujet.titre }}</a></th>
+                <td>{{ sujet.pseudo }} {% if sujet.roles == ['ROLE_ADMIN'] %}<span class="badge bg-danger">Admin</span>{% endif %}</td>
+                <td>{{ sujet.dateCreation|date('d/m/Y') }}</td>
+                <td>{{ sujet.n }}</td>
+                <td>{% if sujet.d == null %}Aucun message envoyé.{% else %}{{ sujet.d|date('d/m/Y  à H:i:s' ) }}{% endif %}</td>
+                
+                
+            </tr>
+
+    {# <div class="mt-1 border border-2 border-primary">
+        <div class="card-body rounded row bg-light">
+            <div class="col-7">
+            <a class="text-decoration-none" href="{{ path('vue_sujet', {'id':sujet.id }) }}">{{ sujet.titre }}</a><br>
+            </div>
+            <div class="col">
+            <small class="text-muted"> par {{ sujet.pseudo }}</small><br>
+            </div>
+            <div class="col">
+            <small class="text-muted">le {{ sujet.dateCreation|date('d/m/Y') }}</small><br>
+            </div>
+            <div class="col">
+            {{ sujet.n }}
+            </div>
+        </div>
+    </div> #}
+
+    {# <div class="card mt-2">
+        <div class="card-body bg-light">
+            <a class="text-decoration-none" href="{{ path('vue_sujet', {'id':sujet.id }) }}">{{ sujet.titre }}</a><br>
+            <small class="text-muted"> par {{ sujet.pseudo }} le {{ sujet.dateCreation|date('d/m/Y') }}</small><br>
+                {{ sujet.n}}
+            
+            </div>
+        </div> #}
+        {% set cpt = (cpt)+1 %} 
+        {% endfor %}<br>
+      </tbody>
+</table>
+
+    {# <div class="text-center">
+        {% if sujets|length > 10 %}
+            {% set test = sujets|length/10%10 %}
+            {% if sujets|length is divisible by(10) %}
+                {% for i in 0..test-1 %}
+                    <a class="btn btn-primary text-white {% if page == i %}active{% endif %}" href="?page={{ i }}">{{ i+1 }}</a>
+                {% endfor %}
+            {% else %}
+                {% for i in 0..test %}
+                    <a class="btn btn-primary text-white {% if page == i %}active{% endif %}" href="?page={{ i }}">{{ i+1 }}</a> 
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div><br> #}
+    <nav>
+        <ul class="pagination justify-content-center mt-5">
+            {% set test = sujets|length/8%8 %}
+            {% if sujets|length is divisible by(8) %}
+                {% for i in 0..test-1 %}
+                    <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i+1 }}</a></li>
+                {% endfor %}
+            {% else %}
+                {% for i in 0..test %}
+                    <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i+1 }}</a></li>
+                {% endfor %}
+            {% endif %}
+            {# <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li> #}
+        
+        </ul>
+    </nav>
+    {% endif %}
+    </div>
+{% endblock %}

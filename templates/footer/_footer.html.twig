@@ -1,0 +1,12 @@
+<footer class="bg-light text-center text-lg-start">
+                {% if app.user %}
+                    {% if app.user.isVerified == false %}
+                    <div class="bg-danger text-center">
+                                Vous devez valider votre adresse mail si vous souhaitez envoyer des messages.
+                        </div>
+                    {% endif %}
+                {% endif %}
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        Site réalisé par MAZEL Florian - 2022
+    </div>
+</footer>

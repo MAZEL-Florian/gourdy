@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+    
+{% if app.user %}
+    <script>
+        location.replace("/");
+    </script>
+{% endif %}
+<div class="py-5">
+<div class="container py-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+        <div class="col-lg-6 bg-light border border-dark border-3 rounded-3 shadow-lg p-3 mb-5 bg-body">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6 text-center mt-5">
+                    <h2 class="text-center">Inscrivez-vous !</h2>
+                </div>
+            </div>
+            {% if form_errors(registrationForm.email) %}
+                <div class="alert alert-danger" role="alert">{{ form_errors(registrationForm.email) }}</div>
+                {% endif %}
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+            <div class="container py-3">
+                {% for flash_error in app.flashes('password_verification') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+                {% if not registrationForm.vars.valid %}
+                    {{ form_start(registrationForm, {'attr':{'class':'was-validated'}}) }}
+                {% else %}
+                    {{ form_start(registrationForm) }}
+                {% endif %}
+                <div class="mb-3">
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class':'form-control'}} ) }}
+                    {# <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.email) }}
+                    </div> #}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(registrationForm.plainPassword) }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class':'form-control'}} ) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form_label(registrationForm.plainPasswordVerif) }}
+                    {{ form_widget(registrationForm.plainPasswordVerif, {'attr': {'class':'form-control'}} ) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.plainPasswordVerif) }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form_label(registrationForm.pseudo) }}
+                    {{ form_widget(registrationForm.pseudo, {'attr': {'class':'form-control'}} ) }}
+                    <div class="invalid-feedback">
+                        {{ form_errors(registrationForm.pseudo) }}
+                    </div>
+                </div>
+                <div class="mb-3 text-center">
+                    {{ form_rest(registrationForm) }}
+                    <button type="submit" class="btn btn-success mb-3">S'inscrire</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+                <div>
+                        Déjà inscrit ?
+                        <a href="{{ path('app_login') }}">
+                            Connectez-vous !
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

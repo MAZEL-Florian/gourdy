@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gourdy{% endblock %}
+
+{% block body %}
+
+<h1 class="text-white text-center py-5">Bienvenue sur Gourdy !</h1>
+    <div class="card-group">
+        <div class="row mb-5">
+        
+            {% for categorie in categories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="content card mt-4">
+                        <a href="{{ path('liste_sujets', {'categorie':categorie.nomCategorie }) }}">
+                            <img class="card-img-top content-image img-fluid" src="/images/{{ categorie.image }}" alt="Image de {{ categorie.nomCategorie }}">
+                            <div class="content-overlay"></div>
+                            <div class="content-details fadeIn-bottom">
+                                <h1 class="content-title">{{ categorie.nomCategorie }}</h1>
+                            </div>
+                        </a>
+                        <div class="card-footer text-center" style="transform: rotate(0); background-color : #22427C;">
+                            <a href="{{ path('liste_sujets', {'categorie':categorie.nomCategorie }) }}" class="btn btn-link stretched-link text-white text-decoration-none">Voir les sujets sur : {{ categorie.nomCategorie }}</a>
+                        </div>
+                    </div>
+                </div>
+                {# <div class="content">
+                    <a href="https://unsplash.com/photos/HkTMcmlMOUQ" target="_blank">
+                    <div class="content-overlay"></div>
+                    <img class="content-image" src="https://images.unsplash.com/photo-1433360405326-e50f909805b3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=359e8e12304ffa04a38627a157fc3362">
+                    <div class="content-details fadeIn-bottom">
+                        <h3 class="content-title">This is a title</h3>
+                    </div>
+                    </a>
+                </div> #}
+
+            {% endfor %}
+        </div>
+    </div>
+
+
+     
+{% endblock %}

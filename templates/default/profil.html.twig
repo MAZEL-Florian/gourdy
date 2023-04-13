@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gourdy - Profil{% endblock %}
+
+{% block body %}
+
+<div class="py-5">
+    
+
+
+
+
+{# {{ form_start(form) }}
+    <div class="mb-3">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email, {'attr': {'class':'form-control'}} ) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.pseudo) }}
+        {{ form_widget(form.pseudo, {'attr': {'class':'form-control'}} ) }}
+    </div> #}
+
+
+    {# <div class="mb-3">
+        {{ form_label(form.avatar) }}
+        {{ form_widget(form.avatar, {'attr': {'class':'form-control'}} ) }}
+    </div> #}
+
+
+
+    {# <div class="mb-3">
+        {{ form_label(form.avatar) }}
+        <img src="../avatars/{{ user.avatar }}" width=100px height=100px class="rounded-circle">
+        {{ form_widget(form.avatar, {'attr': {'class':'form-control', 'value': 'test'}} ) }}
+    </div>
+        {{ form_rest(form) }}
+    <button type="submit" class="btn btn-primary">Editer</button>
+{{ form_end(form) }} #}
+
+
+    <div class="container py-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6 bg-light border border-dark border-3 rounded-3 shadow-lg p-3 mb-5 bg-body">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center mt-5">
+                    <h2 class="mt-0">Votre profil</h2>
+                    </div>
+                </div>
+                {% for flash_error in app.flashes('profil_verification') %}
+                    <div class="alert alert-danger bg-danger text-white" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+                {% if app.request.get('redirect') %}
+                <div class="alert bg-success text-white mt-3">{{ app.request.get('redirect') }}</div>
+                {% endif %}
+                <div class="container py-5">
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                            
+                                <img src="../avatars/{{ user.avatar }}" width=100px height=100px class="rounded-circle border border-dark">
+                            </div>
+                            <div class="col align-self-center">
+                                {{ form_widget(form.avatar, {'attr': {'class':'form-control'}} ) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.pseudo) }}
+                        {{ form_widget(form.pseudo, {'attr': {'class':'form-control'}} ) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email, {'attr': {'class':'form-control'}} ) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.signature) }}
+                        {{ form_widget(form.signature, {'attr': {'class':'form-control'}} ) }}
+                    </div>
+                    <div class="mb-3 text-center">
+                        {{ form_rest(form) }}
+                        <button type="submit" class="btn btn-primary">Editer</button>
+                    </div>
+                    {{ form_end(form) }}
+                    <div class="mb-3"><br>
+                        <a href="{{ path('profile_password') }}">Je veux changer de mot de passe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{# <div class="container px-4 ">
+                        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                            <div class="col-lg-6 bg-light border border-dark border-3 rounded-3">
+                                <div class="row gx-4 gx-lg-5 justify-content-center">
+                                    <div class="col-lg-8 col-xl-6 text-center"><br>
+                                        <h2 class="mt-0">Contact</h2>
+                                        <hr class="divider bg-secondary" />
+                                    </div>
+                                </div>
+                                <div class="container py-4">
+                                    <form id="contactForm" class="was-validated" action="contact.php" method="POST">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="name">Nom</label>
+                                            <input class="form-control" id="name" name="nom" type="text" placeholder="Nom" required />
+                                            <div class="invalid-feedback" id="formNom"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="emailAddress">Adresse mail</label>
+                                            <input class="form-control" id="email" name="mail" type="email" placeholder="Adresse mail" required/>
+                                            <div class="invalid-feedback" id="formMail"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="message">Message</label>
+                                            <textarea class="form-control" id="message" minlength="20" type="text" name="message" placeholder="Message" style="height: 10rem;" required></textarea>
+                                            <div class="invalid-feedback" id="formMessage"></div>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary btn-xl" id="submitButton" name="envoyer" type="submit">Envoyer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div> #}

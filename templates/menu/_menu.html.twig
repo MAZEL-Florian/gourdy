@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">Accueil</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav my-2 my-lg-0 ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" type="button" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    Catégories
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Cuisine' }) }}">Cuisine</a></li>
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Littérature' }) }}">Littérature</a></li>
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Voyage' }) }}">Voyage</a></li>
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Musique' }) }}">Musique</a></li>
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Informatique' }) }}">Informatique</a></li>
+                        <li><a class="dropdown-item" href="{{ path('liste_sujets', {'categorie':'Cinéma' }) }}">Cinéma</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% if app.user %}
+                {% if app.user.isVerified == true %}
+                    
+                    <ul class="navbar-nav my-2 my-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('ajout_sujet') }}">Nouveau Sujet</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav my-2 my-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('mes_sujets') }}">Mes sujets</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="rounded-circle" src="../../avatars/{{ app.user.avatar }}" width="30px" height="30px">
+                            {{ app.user.pseudo }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ path('profile') }}">Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                {% if is_granted ('ROLE_ADMIN') %}<span class="badge bg-danger">Admin</span>{% endif %}
+                    {# <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{{ path('profile') }}">Profil</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                    </ul> #}
+            {% else %}
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Connexion</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    </nav>
+    
+        {# <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #232f3e">
+    <!-- Container wrapper -->
+    <div class="container justify-content-center justify-content-md-between">
+      <!-- Left links -->
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item me-2 me-lg-0">
+          <a class="nav-link" href="#" role="button" data-mdb-toggle="sidenav" data-mdb-target="#sidenav-1"
+            class="btn shadow-0 p-0 me-3" aria-controls="#sidenav-1" aria-haspopup="true">
+            <i class="fas fa-bars me-1"></i>
+            <span>Categories</span>
+          </a>
+        </li>
+        </ul>
+        </ul>
+        </div>
+        </nav> #}
+

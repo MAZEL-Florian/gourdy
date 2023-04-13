@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition commentaire{% endblock %}
+
+{% block body %}
+<div class="py-5">
+    <div class="container py-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-8 bg-light border border-dark border-3 rounded-3">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center mt-5">
+                        <h2 class="text-center">Edition du commentaire</h2>
+                    </div>
+                </div>
+                 <div class="container py-5">
+                        
+                    {{ form_start(form) }}
+                
+                    <div class="mb-3">
+                        <label>Pseudo :</label>
+                        <input type="text" id="delete_commentaire_pseudo" name="delete_commentaire_form[pseudo]" disabled="disabled" required="required" maxlength="255" class="form-control" value="{{ user.pseudo }}" />
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.dateCommentaire) }}
+                        {{ form_widget(form.dateCommentaire, {'attr': {'class':'form-control', 'format':'d/m/Y'}} ) }}
+                    </div>
+                    
+                        {{ form_start(form2) }}
+                    <div class="mb-3">
+                        {{ form_label(form2.contenu) }}
+                        {% if user.email != app.user.email %}
+                        {{ form_widget(form2.contenu, {'attr': {'class':'form-control', 'rows' : 10, 'readonly' : true  }} ) }}
+                        {% else %}
+                        {{ form_widget(form2.contenu, {'attr': {'class':'form-control', 'rows' : 10 }} ) }}
+                        {% endif %}
+                    </div>
+                    
+                    {{ form_rest(form2) }}
+                    {{ form_rest(form) }}
+                    <div class="text-center">
+                    {% if user.email == app.user.email %}
+                        <button class="btn btn-primary" name="enregistrer" type="submit">Enregistrer</button>
+                        {% endif %}
+                        {% if is_granted ('ROLE_ADMIN') %}
+                        <button class="btn btn-primary" name="supprimer" type="submit">Supprimer</button>
+                        {% endif %}
+                    </div>
+                            {{ form_end(form2) }}
+                    {{ form_end(form) }}
+                        
+                    
+                        
+                    
+                </div>
+                 {# <div class="container py-5">
+                    {{ form_start(form2) }}
+                    <div class="mb-3">
+                        {{ form_label(form2.contenu) }}
+                        {{ form_widget(form2.contenu, {'attr': {'class':'form-control'}} ) }}
+                    </div>
+                    {{ form_rest(form2) }}
+                    <button class="btn btn-primary" type="submit">enregistrer</button>
+                    {{ form_end(form2) }}
+                </div> #}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

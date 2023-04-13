@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Gourdy - {{ sujet.titre }}{% endblock %}
+
+{% block body %}
+{# <div class="container pt-5">
+    <div class="card">
+        <div class="card-header bg-gradient bg-info">
+            <h1>{{ sujet.titre }}</h1>
+            <div class="col d-inline">
+                <img class="img rounded-circle width:100%" width="50" height="50" src="../avatars/{{ sujet.user.avatar }}">
+            </div>
+            <div class="col d-inline">
+                par <b>{{ sujet.user.pseudo }}</b> <br>
+                <small class="text-muted">le {{ sujet.dateCreation|date("d/m/Y à H:i:s") }}</small>
+             
+            </div>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p>{{ sujet.contenu }}</p>
+            </blockquote>
+        </div>
+    </div>
+</div> #}
+
+<div class="container py-5">
+    <div class="toast-header text-dark mt-2 bg-info bg-gradient">
+        <img width="50" height="50" src="../avatars/{{ sujet.user.avatar }}" class="rounded me-2 rounded-circle" alt="...">
+        
+        <strong class="me-auto">{{ sujet.user.pseudo }} {% if sujet.user.roles[0] == 'ROLE_ADMIN' %}<span class="badge bg-danger">Admin</span>{% endif %}</strong>
+        <small class="text-muted">le {{ sujet.dateCreation|date("d/m/Y à H:i:s") }}</small>
+    </div>
+    <div class="toast-body bg-light">
+    <h2>{{ sujet.titre }}</h2>
+        {{ sujet.contenu }}
+    </div>
+</div>
+<div class="container mt-3">
+    {% set cpt = 0 %}
+    {% set page = app.request.get('page') %}
+    {% set nbComm = page*8 %}
+
+    {% if sujet.commentaires|slice(nbComm, 8) is empty and page >= 1 %}
+    <script>
+        location.replace("{{ sujet.id }}");
+    </script>
+    {% endif %}
+
+    {% for commentaire in sujet.commentaires|slice(nbComm, 8) %}
+        {# <div class="card mt-1">
+            <div class="container p-3 bg-gradient" {% if commentaire.user.roles[0] == 'ROLE_ADMIN' %} style="background-color:red;" {% elseif cpt is divisible by(2) %} style="background-color:#3cb371" {% else %} style="background-color:#20c997" {% endif %}>
+                <div class="col d-inline">
+                
+                    <img class="img rounded-circle" width="50px" height="50px"  src="../avatars/{{ commentaire.user.avatar }}">
+                    <div class="col d-inline">
+                        Par <b> {{ commentaire.user.pseudo }} </b>  {% if commentaire.user.roles[0] == 'ROLE_ADMIN' %} - Admin{% endif %} <br>
+                        <small class="text-muted d-inline">le {{ commentaire.dateCommentaire|date("d/m/Y à H:i:s") }}</small>
+                    </div>
+                    {% if is_granted ('ROLE_ADMIN') %}
+                    <div class="text-right">
+                        <a class="btn btn-primary" href="{{ path('delete_Commentaire', {'id':commentaire.id }) }}">Supprimer</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div> #}
+        {% if commentaire.isDelete %}
+            <div class="toast-header text-dark mt-3 bg-gradient" {% if cpt is divisible by(2) %} style="background-color:#3cb371" {% else %} style="background-color:#20c997" {% endif %}>
+                <img width="50" height="50" src="../avatars/{{ commentaire.user.avatar }}" class="rounded me-2 rounded-circle" alt="...">
+                <strong class="me-auto">{{ commentaire.user.pseudo }} {% if commentaire.user.roles[0] == 'ROLE_ADMIN' %}<span class="badge bg-danger">Admin</span>{% endif %}</strong>
+                <small class="text-muted">le {{ commentaire.dateCommentaire|date("d/m/Y à H:i:s") }}</small>
+            </div>
+            <div class="toast-body bg-light">
+                <small class="text-muted">Ce message a été supprimé par un admin.</small>
+            </div>
+        {% else %}
+            <div class="toast-header text-dark mt-3 bg-gradient" {% if cpt is divisible by(2) %} style="background-color:#3cb371" {% else %} style="background-color:#20c997" {% endif %}>
+                <img width="50" height="50" src="../avatars/{{ commentaire.user.avatar }}" class="rounded me-2 rounded-circle" alt="...">
+                <strong class="me-auto">{{ commentaire.user.pseudo }} {% if commentaire.user.roles[0] == 'ROLE_ADMIN' %}<span class="badge bg-danger">Admin</span>{% endif %}
+                    {% if app.user and app.user.email == commentaire.user.email or is_granted ('ROLE_ADMIN') %}
+                    <a class="btn btn-primary" href="{{ path('edit_Commentaire', {'id':commentaire.id}) }}">Modifier</a>
+                    {% endif %}</strong>
+                <small class="text-muted">le {{ commentaire.dateCommentaire|date("d/m/Y à H:i:s") }}</small>
+            </div>
+            <div class="toast-body bg-light">
+                {{ commentaire.contenu }}
+                {% if commentaire.isEdited == true %}<br><br>
+                    <small class="text-muted">Ce message a été modifié le {{ commentaire.dateModification|date("d/m/Y à H:i:s") }}</small>
+                {% endif %}
+                {% if commentaire.user.signature is not null %}
+                    <hr>
+                    <small class="text-muted"><b>{{ commentaire.user.signature }}</b></small>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% set cpt = (cpt)+1 %}   
+    {% endfor %}
+            {# <div class="container p-1 bg-gradient" {% if cpt is divisible by(2) %} style="background-color:#3cb371" {% else %} style="background-color:#20c997" {% endif %}>
+                <div class="row">
+                    <div class="col col-sm-1 align-self-center text-center">
+                        <img class="img rounded-circle width:100%" width="50" height="50" src="../avatars/{{ commentaire.user.avatar }}">
+                    </div>
+                    <div class="col col-sm-2">Par <b> {{ commentaire.auteur }} </b><br>
+                        <small class="text-muted">le {{ commentaire.dateCommentaire|date("d/m/Y à H:i:s") }}</small>
+                    </div>
+                </div>
+            </div> #}
+
+
+
+            {# <div class="card-header bg-gradient" {% if cpt is divisible by(2) %} style="background-color:#3cb371" {% else %} style="background-color:#20c997" {% endif %}>
+                <div>
+                    Par <b>{{ commentaire.auteur }}</b><img class="img rounded-circle width:100%" width="50" height="50" src="../avatars/{{ commentaire.user.avatar }}">
+                </div>
+                <small class="text-muted">envoyé le {{ commentaire.dateCommentaire|date("d/m/Y à H:i:s") }}</small>
+            </div> #}
+
+{# 
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>{{ commentaire.contenu }}</p>
+                </blockquote>
+            </div> #}
+
+        
+
+
+
+    {# <div class="text-center">
+        {% if sujet.commentaires|length > 8 %}
+            {% set test = sujet.commentaires|length/8%8 %}
+            {% if sujet.commentaires|length is divisible by(8) %}
+                {% for i in 0..test-1 %}
+                    <a class="btn btn-primary {% if page == i %}active{% endif %}" href="?page={{ i }}">{{ i+1 }}</a>
+                {% endfor %}
+            {% else %}
+                {% for i in 0..test %}
+                    <a class="btn btn-primary {% if page == i %}active{% endif %}" href="?page={{ i }}">{{ i+1 }}</a> 
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div> #}
+    {% if sujet.commentaires|length > 8 %}
+    <nav>
+        <ul class="pagination justify-content-center mt-5">
+        
+            {% set test = sujet.commentaires|length/8%8 %}
+            {% if sujet.commentaires|length is divisible by(8) %}
+                {% for i in 0..test-1 %}
+            <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i+1 }}</a></li>
+            {% endfor %}
+            {% else %}
+                {% for i in 0..test %}
+                    <li class="page-item {% if page == i %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i+1 }}</a></li>
+                {% endfor %}
+            {% endif %}
+            {# <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li> #}
+        
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+<br><br>
+
+{% if is_granted ('ROLE_USER') and app.user.isVerified == true %}
+
+    <div class="py-1 bg-danger rounded"></div><br><br>
+        {{ form_start(form) }}  
+        
+        
+        {{ form_widget(form.contenu, {'attr':{'class':'form-control'}}) }}
+        {{ form_rest(form) }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-2 mb-5">Envoyer</button>
+        </div>
+        {{ form_end(form) }}
+{% elseif app.user == false %}
+    <div class="text-center">
+        <a class="btn btn-primary" href="{{ path('app_login') }}">Vous devez être connecté pour envoyer des messages.</a>
+    </div><br>
+{% elseif app.user.isVerified == false %}
+    <div class="text-center">
+        <a class="btn btn-primary" href="{{ path('app_login') }}">Vous devez valider votre adresse mail pour envoyer des messages.</a>
+    </div><br>
+{% endif %}
+
+{# <script>
+      let modalBtns = [...document.querySelectorAll(".button")];
+      modalBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          let modal = btn.getAttribute("data-modal");
+          document.getElementById(modal).style.display = "block";
+        };
+      });
+      let closeBtns = [...document.querySelectorAll(".close")];
+      closeBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          let modal = btn.closest(".modal");
+          modal.style.display = "none";
+        };
+      });
+      window.onclick = function (event) {
+        if (event.target.className === "modal") {
+          event.target.style.display = "none";
+        }
+      };
+    </script> #}
+
+
+{% endblock %}

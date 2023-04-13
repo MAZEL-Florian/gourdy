@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gourdy - Connexion{% endblock %}
+
+{% block body %}
+<div class="py-5">
+    <div class="container py-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6 bg-light border border-dark border-3 rounded-3 shadow-lg p-3 mb-5 bg-body">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center mt-5">
+                        <h2 class="mt-0">Connexion</h2>
+                    </div>
+                </div>
+                <div class="container py-5">
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        {% if app.user %}
+                            <div class="mb-3 text-white">
+                                <div class="alert alert-danger">
+                                    Vous êtes connecté en tant que : {{ app.user.pseudo }}, <a class="text-decoration-none" href="{{ path('app_logout') }}">Déconnectez-vous !</a>
+                                </div>
+                            </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label>Email :</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Votre adresse mail" class="form-control" autocomplete="email" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label>Mot de passe :</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Votre Mot de passe" autocomplete="current-password" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
+                        <div class="text-center">
+                            <button class="btn btn-success" type="submit">
+                                Connexion
+                            </button>
+                        </div>
+                        <div class="mt-3 mb-3">
+                            Pas de compte ?
+                            <a href="{{ path('app_register') }}">
+                                Inscrivez-vous !
+                            </a>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
