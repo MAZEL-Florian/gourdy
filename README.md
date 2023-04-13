@@ -2,6 +2,8 @@
 
 ## Installation
 
+- Assurez-vous que "Apache" et "MySQL" sont activés dans Xampp.
+
 1. Clonez le repository :
 - git clone https://github.com/MAZEL-Florian/gourdy.git
 2. Accédez au dossier du projet :
@@ -18,6 +20,6 @@
 - symfony server:start -d
 
 
-- Assurez-vous que "Apache" et "MySQL" sont activés dans Xampp.
+
 ## Projet
 Ce projet est un forum que j'ai réalisé pendant 3 mois afin de découvrir le framework Symfony. J'ai utilisé la version 5.4 pour le développement de cette application. Il nécessite Xampp pour son fonctionnement
