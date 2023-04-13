@@ -1,8 +1,11 @@
 # Gourdy
 
-## Installation
+## Projet
+Ce projet est un forum que j'ai réalisé pendant 3 mois afin de découvrir le framework Symfony. J'ai utilisé la version 5.4 pour le développement de cette application. Il nécessite Xampp pour son fonctionnement
 
 - Assurez-vous que "Apache" et "MySQL" sont activés dans Xampp.
+
+## Installation
 
 1. Clonez le repository :
 - git clone https://github.com/MAZEL-Florian/gourdy.git
@@ -21,5 +24,4 @@
 
 
 
-## Projet
-Ce projet est un forum que j'ai réalisé pendant 3 mois afin de découvrir le framework Symfony. J'ai utilisé la version 5.4 pour le développement de cette application. Il nécessite Xampp pour son fonctionnement
+
