@@ -1,7 +1,7 @@
 # Gourdy
 
 ## Projet
-Ce projet est un forum que j'ai réalisé pendant 3 mois afin de découvrir le framework Symfony. J'ai utilisé la version 5.4 pour le développement de cette application. Il nécessite Xampp pour son fonctionnement
+Ce projet est un forum que j'ai réalisé pendant 3 mois afin de découvrir le framework Symfony. J'ai utilisé la version 5.4 pour le développement de cette application. Il nécessite Xampp pour son fonctionnement ainsi que la version PHP 8.1.5
 
 - Assurez-vous que "Apache" et "MySQL" sont activés dans Xampp.
 
